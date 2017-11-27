@@ -547,3 +547,4 @@ There are still several ways to improve the quality of the data set as well as t
 So that is. We know that there are still several things need to be improved in our model. But we hope that we did it in the right direction and got the right idea of analysing a logistic regression from a given data set.
 
 Thank you in advance.
+Hmm
