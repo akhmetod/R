@@ -1,28 +1,134 @@
 ---
-title: "Seminararbeit_2_Gruppe_2"
-output: pdf_document
+title: 'Programmieren mit R: Seminararbeit 2'
+author:
+- Daniyar Akhmetov (5127348)
+- Marcelo Rainho Avila (4679876)
+- Xuan Son Le (4669361)
+date: 'Abgabedatum: 19.12.2017'
+output:
+  pdf_document:
+    keep_tex: yes
+    latex_engine: pdflatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '3'
+graphics: yes
+lof: no
+fontsize: 12
+documentclass: article
 ---
-
+\newpage
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+# remove environmental variables
+rm(list = ls())
 ```
 
-## R Markdown
+# Part I: *Functions* (15 points)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Functions I:
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Define  a  function  which  given  an  atomic  vector x as  argument,
+returns x after  removing  missing values
 
-```{r cars}
-summary(cars)
+```{r function 1}
+dropNa <- function(x) {
+  # takes an atomic vector as an argument and returns it without missing values
+  x[!is.na(x)]
+}
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r test function 1}
+all.equal(dropNa(c(1, 2, 3, NA, 1, 2, 3)), c(1, 2, 3, 1, 2, 3))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Functions II:
+
+*Part I:* Write a function meanVarSdSe that takes a numeric vector x as argument. The function should return a named numeric vector that contains the mean, the variance, the standard deviation and the standard error of x. 
+```{r function 2}
+meanVarSdSe <- function(x){
+  # takes an numeric vector as argument and returns a named numeric vector 
+  # containing its mean, variance, standard deviation and standard error 
+  c(mean = mean(x),
+    var = var(x),
+    sd = sd(x),
+    se = sd(x) / sqrt(length(x))
+  )
+}
+```
+
+
+```{r test 2}
+x <- 1:100
+meanVarSdSe(x)
+```
+
+
+\vspace{1cm} <!-- add 1 cm vertical space -->
+
+*Part II:*  Look at the following code sequence. What result do you expect?
+
+```{r expect, eval=FALSE}
+x <- c(NA, 1:100)
+meanVarSdSe(x)
+
+mean(x,)
+```
+
+The code returns NA values for each statistic computed, which is the output
+of each function when using the default (FALSE) argument for `na.rm`.
+
+
+
+```{r meanVarSdSe with na.rm}
+meanVarSdSe <- function(x, ...){
+  # computs mean, variance, standard deviation and standard error
+  #
+  # Args:
+  #   x: a numeric vector
+  #
+  # Returns:
+  #   mean, variance, standard deviation and standard error of input vector
+  c(mean = mean(x, ...),
+    var = var(x, ...),
+    sd = sd(x, ...),
+    se = sd(x, ...) / sqrt(length(which(!is.na(x))))
+  )
+}
+
+# test
+meanVarSdSe(x, na.rm = TRUE)
+```
+
+
+
+```{r}
+meanVarSdSe(c("a",2,"b"))
+```
+
+
+
+
+
+
+```{r}
+length(which(!is.na(x)))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
