@@ -27,6 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # remove environmental variables
 rm(list = ls())
+<<<<<<< HEAD
 ```
 
 # Part I: *Functions* (15 points)
@@ -105,26 +106,101 @@ meanVarSdSe(x, na.rm = TRUE)
 meanVarSdSe <- function(x){
   # computs mean, variance, standard deviation and standard error while using 
   # dropNa function
+=======
+```
+
+# Part I: *Functions* (15 points)
+
+## Functions I:
+
+Define  a  function  which  given  an  atomic  vector x as  argument,
+returns x after  removing  missing values
+
+```{r function 1}
+dropNa <- function(x) {
+  # takes an atomic vector as an argument and returns it without missing values
+  x[!is.na(x)]
+}
+```
+
+```{r test function 1}
+all.equal(dropNa(c(1, 2, 3, NA, 1, 2, 3)), c(1, 2, 3, 1, 2, 3))
+```
+
+## Functions II:
+
+*Part I:* Write a function meanVarSdSe that takes a numeric vector x as argument. The function should return a named numeric vector that contains the mean, the variance, the standard deviation and the standard error of x. 
+```{r function 2}
+meanVarSdSe <- function(x){
+  # takes an numeric vector as argument and returns a named numeric vector 
+  # containing its mean, variance, standard deviation and standard error 
+  c(mean = mean(x),
+    var = var(x),
+    sd = sd(x),
+    se = sd(x) / sqrt(length(x))
+  )
+}
+```
+
+
+```{r test 2}
+x <- 1:100
+meanVarSdSe(x)
+```
+
+
+\vspace{1cm} <!-- add 1 cm vertical space -->
+
+*Part II:*  Look at the following code sequence. What result do you expect?
+
+```{r expect, eval=FALSE}
+x <- c(NA, 1:100)
+meanVarSdSe(x)
+
+mean(x,)
+```
+
+The code returns NA values for each statistic computed, which is the output
+of each function when using the default (FALSE) argument for `na.rm`.
+
+
+
+```{r meanVarSdSe with na.rm}
+meanVarSdSe <- function(x, ...){
+  # computs mean, variance, standard deviation and standard error
+>>>>>>> 831ccbbcbd07ffde8db34a06a08be7aa1143eb73
   #
   # Args:
   #   x: a numeric vector
   #
   # Returns:
   #   mean, variance, standard deviation and standard error of input vector
+<<<<<<< HEAD
   dropedNa <- dropNa(x)
   c(mean = mean(dropedNa),
     var = var(dropedNa),
     sd = sd(dropedNa),
     se = sd(dropedNa) / sqrt(length(dropedNa))
+=======
+  c(mean = mean(x, ...),
+    var = var(x, ...),
+    sd = sd(x, ...),
+    se = sd(x, ...) / sqrt(length(which(!is.na(x))))
+>>>>>>> 831ccbbcbd07ffde8db34a06a08be7aa1143eb73
   )
 }
 
 # test
+<<<<<<< HEAD
 meanVarSdSe(c(x, NA))
+=======
+meanVarSdSe(x, na.rm = TRUE)
+>>>>>>> 831ccbbcbd07ffde8db34a06a08be7aa1143eb73
 ```
 
 
 
+<<<<<<< HEAD
 
 ## Functions III: 
 
@@ -134,6 +210,19 @@ Write an infix function %or% that behaves like the logical operator |
 "%or%" <- function(x,y) {
   # logical operator OR... TO BE DONE...
 }
+=======
+```{r}
+meanVarSdSe(c("a",2,"b"))
+```
+
+
+
+
+
+
+```{r}
+length(which(!is.na(x)))
+>>>>>>> 831ccbbcbd07ffde8db34a06a08be7aa1143eb73
 ```
 
 
@@ -147,3 +236,7 @@ Write an infix function %or% that behaves like the logical operator |
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 831ccbbcbd07ffde8db34a06a08be7aa1143eb73
