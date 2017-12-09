@@ -32,7 +32,6 @@ rm(list = ls())
 # Part I: *Functions* (15 points)
 
 ## Functions I:
-
 Define  a  function  which  given  an  atomic  vector x as  argument,
 returns x after  removing  missing values
 
@@ -65,7 +64,6 @@ meanVarSdSe <- function(x){
 x <- 1:100
 meanVarSdSe(x)
 ``` 
-
 
 \vspace{1cm} <!-- add 1 cm vertical space -->
 
@@ -100,6 +98,9 @@ meanVarSdSe <- function(x, ...){
 meanVarSdSe(x, na.rm = TRUE)
 ```
 
+\vspace{1cm} <!-- add 1 cm vertical space -->
+
+*Part III:* Write an alternative version of meanVarSdSe in which you make use of the function definition **dropNa** from the above exercise.  
 
 ```{r meanVarSdSe 3 with dropNa}
 meanVarSdSe <- function(x){
@@ -124,26 +125,91 @@ meanVarSdSe(c(x, NA))
 ```
 
 
-
-
 ## Functions III: 
 
 Write an infix function %or% that behaves like the logical operator |
 
 ```{r logical operator}
 "%or%" <- function(x,y) {
-  # logical operator OR... TO BE DONE...
+  # logical operator OR:
+  # TRUE OR TRUE = TRUE
+  # TRUE OR FALSE = TRUE
+  # FALSE OR TRUE = TRUE
+  # FALSE OR FALSE = FALSE
+  
+  ifelse(x == TRUE, TRUE,
+         ifelse(y == TRUE, TRUE, FALSE))
 }
+
+c(TRUE, FALSE, TRUE, FALSE) %or% c(TRUE, TRUE, FALSE, FALSE)
 ```
 
 
+# Part II: *Scoping and related topics * (15 points)
+
+*Scoping I:* Explain the results of the three function calls
+
+```{r}
+x <- 5
+y <- 7
+f <- function() x * y
+g <- function(x = 2, y = x) x * y
+f() # call 1
+g() # call 2
+g(y=x) #call3
+```
+
+x and y are originally assigned to the value 5 and 7 respectively.  
+Function f does not require any arguments and is defined as the product of x and y, which is 5*7 = 35 (see call 1).  
+Function g has two arguments, which are x with the new value of 2 and y is assigned equally to x. Function g is also defined as the product of x and y.
+In call 2, function g is calles without any arguments. In this function, x is equal to 2 and y is equal to x. The nearest x to y has the value of 2. So the product is 4.
+In call 3, x is not called, so x will get the original value, which is 5. y is assigned equally to x. The nearest x to y has the value of 2. So the product is 10 in this case.
+
+*Scoping II:* Why and how does the following code work?
+
+```{r}
+t <- matrix(1:6, ncol = 3, byrow = TRUE) 
+t
+t(t)
+```
+
+t is a matrix with 3 columns and 2 rows. The values from 1 to 6 are filled by rows. t is also a default function in R, which returns the transpose of a matrix or data frame. So calling t(t) is actually transposing the defined matrix t.
+
+*Scoping III:* Why do the results of t(T) and t(t) differ?
+
+```{r}
+t <- function(...) matrix(...)
+T <- t(1:6, ncol = 3, byrow = TRUE)
+t(T)
+```
+
+In the first case, t is defined as a specific function, which has the same function as a matrix(..) function. T is a matrix with 3 columns and 2 rows. The values from 1 to 6 are also filled by rows. So calling t(T) is the same as calling matrix(T).  
+
+```{r}
+t <- function(...) matrix(...)
+t <- t(1:6, ncol = 3, byrow = TRUE) 
+t(t)
+```
+
+In the second case, t is also defined as a matrix() function. But then being redefined as a matrix. So R will understand t(t) as a transpose of a matrix. 
 
 
+*Dynamic lookup:* Explain the results of the five function calls and why the rm function in line 1 is important.
 
+```{r}
+rm(list = ls(all.names = TRUE))
+f <- function(x, y = x + 1) x + y 
+x <- 3
+f(2) # call 1
+x <- 5
+f(2) # call 2
 
+f <- function(y = x + 1) x + y 
+x <- 3
+f(2) # call 3
+x <- 5
+f(2) # call 4 
+f() # call 5
+```
 
-
-
-
-
-
+No idea xD

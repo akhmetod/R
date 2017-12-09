@@ -1,0 +1,487 @@
+\documentclass[12,]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Programmieren mit R: Seminararbeit 2},
+            pdfauthor={Daniyar Akhmetov (5127348); Marcelo Rainho Avila (4679876); Xuan Son Le (4669361)},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Programmieren mit R: Seminararbeit 2}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Daniyar Akhmetov (5127348) \\ Marcelo Rainho Avila (4679876) \\ Xuan Son Le (4669361)}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{Abgabedatum: 19.12.2017}
+
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\newpage
+
+\section{\texorpdfstring{Part I: \emph{Functions} (15
+points)}{Part I: Functions (15 points)}}\label{part-i-functions-15-points}
+
+\subsection{Functions I:}\label{functions-i}
+
+Define a function which given an atomic vector x as argument, returns x
+after removing missing values
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dropNa <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \CommentTok{# takes an atomic vector as an argument and returns it without missing values}
+\NormalTok{  x[}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(x)]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{all.equal}\NormalTok{(}\KeywordTok{dropNa}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)), }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\subsection{Functions II:}\label{functions-ii}
+
+\emph{Part I:} Write a function meanVarSdSe that takes a numeric vector
+x as argument. The function should return a named numeric vector that
+contains the mean, the variance, the standard deviation and the standard
+error of x.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{meanVarSdSe <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{}
+  \CommentTok{# takes an numeric vector as argument and returns a named numeric vector }
+  \CommentTok{# containing its mean, variance, standard deviation and standard error }
+  \KeywordTok{c}\NormalTok{(}\DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(x),}
+    \DataTypeTok{var =} \KeywordTok{var}\NormalTok{(x),}
+    \DataTypeTok{sd =} \KeywordTok{sd}\NormalTok{(x),}
+    \DataTypeTok{se =} \KeywordTok{sd}\NormalTok{(x) }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{length}\NormalTok{(x))}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\CommentTok{# test}
+\NormalTok{x <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{100}
+\KeywordTok{meanVarSdSe}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean        var         sd         se 
+##  50.500000 841.666667  29.011492   2.901149
+\end{verbatim}
+
+\vspace{1cm}
+
+\emph{Part II:} Look at the following code sequence. What result do you
+expect?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{100}\NormalTok{)}
+\KeywordTok{meanVarSdSe}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+The code returns NA values for each statistic computed, which is the
+output of each function when using the default (FALSE) argument for
+\texttt{na.rm}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{meanVarSdSe <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, ...)\{}
+  \CommentTok{# computs mean, variance, standard deviation and standard error}
+  \CommentTok{#}
+  \CommentTok{# Args:}
+  \CommentTok{#   x: a numeric vector}
+  \CommentTok{#}
+  \CommentTok{# Returns:}
+  \CommentTok{#   mean, variance, standard deviation and standard error of input vector}
+  \KeywordTok{c}\NormalTok{(}\DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(x, ...),}
+    \DataTypeTok{var =} \KeywordTok{var}\NormalTok{(x, ...),}
+    \DataTypeTok{sd =} \KeywordTok{sd}\NormalTok{(x, ...),}
+    \DataTypeTok{se =} \KeywordTok{sd}\NormalTok{(x, ...) }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{length}\NormalTok{(}\KeywordTok{which}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(x))))}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\CommentTok{# test}
+\KeywordTok{meanVarSdSe}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean        var         sd         se 
+##  50.500000 841.666667  29.011492   2.901149
+\end{verbatim}
+
+\vspace{1cm}
+
+\emph{Part III:} Write an alternative version of meanVarSdSe in which
+you make use of the function definition \textbf{dropNa} from the above
+exercise.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{meanVarSdSe <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{}
+  \CommentTok{# computs mean, variance, standard deviation and standard error while using }
+  \CommentTok{# dropNa function}
+  \CommentTok{#}
+  \CommentTok{# Args:}
+  \CommentTok{#   x: a numeric vector}
+  \CommentTok{#}
+  \CommentTok{# Returns:}
+  \CommentTok{#   mean, variance, standard deviation and standard error of input vector}
+\NormalTok{  dropedNa <-}\StringTok{ }\KeywordTok{dropNa}\NormalTok{(x)}
+  \KeywordTok{c}\NormalTok{(}\DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(dropedNa),}
+    \DataTypeTok{var =} \KeywordTok{var}\NormalTok{(dropedNa),}
+    \DataTypeTok{sd =} \KeywordTok{sd}\NormalTok{(dropedNa),}
+    \DataTypeTok{se =} \KeywordTok{sd}\NormalTok{(dropedNa) }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{length}\NormalTok{(dropedNa))}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\CommentTok{# test}
+\KeywordTok{meanVarSdSe}\NormalTok{(}\KeywordTok{c}\NormalTok{(x, }\OtherTok{NA}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mean        var         sd         se 
+##  50.500000 841.666667  29.011492   2.901149
+\end{verbatim}
+
+\subsection{Functions III:}\label{functions-iii}
+
+Write an infix function \%or\% that behaves like the logical operator
+\textbar{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{"%or%"}\NormalTok{ <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x,y) \{}
+  \CommentTok{# logical operator OR:}
+  \CommentTok{# TRUE OR TRUE = TRUE}
+  \CommentTok{# TRUE OR FALSE = TRUE}
+  \CommentTok{# FALSE OR TRUE = TRUE}
+  \CommentTok{# FALSE OR FALSE = FALSE}
+  
+  \KeywordTok{ifelse}\NormalTok{(x }\OperatorTok{==}\StringTok{ }\OtherTok{TRUE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{,}
+         \KeywordTok{ifelse}\NormalTok{(y }\OperatorTok{==}\StringTok{ }\OtherTok{TRUE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{))}
+\NormalTok{\}}
+
+\KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{) }\OperatorTok{%or%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE  TRUE  TRUE FALSE
+\end{verbatim}
+
+\section{\texorpdfstring{Part II: \emph{Scoping and related topics } (15
+points)}{Part II: Scoping and related topics  (15 points)}}\label{part-ii-scoping-and-related-topics-15-points}
+
+\emph{Scoping I:} Explain the results of the three function calls
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{5}
+\NormalTok{y <-}\StringTok{ }\DecValTok{7}
+\NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() x }\OperatorTok{*}\StringTok{ }\NormalTok{y}
+\NormalTok{g <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =} \DecValTok{2}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ x) x }\OperatorTok{*}\StringTok{ }\NormalTok{y}
+\KeywordTok{f}\NormalTok{() }\CommentTok{# call 1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 35
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{g}\NormalTok{() }\CommentTok{# call 2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{g}\NormalTok{(}\DataTypeTok{y=}\NormalTok{x) }\CommentTok{#call3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+x and y are originally assigned to the value 5 and 7 respectively.\\
+Function f does not require any arguments and is defined as the product
+of x and y, which is 5*7 = 35 (see call 1).\\
+Function g has two arguments, which are x with the new value of 2 and y
+is assigned equally to x. Function g is also defined as the product of x
+and y. In call 2, function g is calles without any arguments. In this
+function, x is equal to 2 and y is equal to x. The nearest x to y has
+the value of 2. So the product is 4. In call 3, x is not called, so x
+will get the original value, which is 5. y is assigned equally to x. The
+nearest x to y has the value of 2. So the product is 10 in this case.
+
+\emph{Scoping II:} Why and how does the following code work?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{t <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{, }\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{) }
+\NormalTok{t}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t}\NormalTok{(t)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    1    4
+## [2,]    2    5
+## [3,]    3    6
+\end{verbatim}
+
+t is a matrix with 3 columns and 2 rows. The values from 1 to 6 are
+filled by rows. t is also a default function in R, which returns the
+transpose of a matrix or data frame. So calling t(t) is actually
+transposing the defined matrix t.
+
+\emph{Scoping III:} Why do the results of t(T) and t(t) differ?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{t <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...) }\KeywordTok{matrix}\NormalTok{(...)}
+\NormalTok{T <-}\StringTok{ }\KeywordTok{t}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{, }\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{t}\NormalTok{(T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]
+## [1,]    1
+## [2,]    4
+## [3,]    2
+## [4,]    5
+## [5,]    3
+## [6,]    6
+\end{verbatim}
+
+In the first case, t is defined as a specific function, which has the
+same function as a matrix(..) function. T is a matrix with 3 columns and
+2 rows. The values from 1 to 6 are also filled by rows. So calling t(T)
+is the same as calling matrix(T).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{t <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(...) }\KeywordTok{matrix}\NormalTok{(...)}
+\NormalTok{t <-}\StringTok{ }\KeywordTok{t}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{, }\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{) }
+\KeywordTok{t}\NormalTok{(t)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    1    4
+## [2,]    2    5
+## [3,]    3    6
+\end{verbatim}
+
+In the second case, t is also defined as a matrix() function. But then
+being redefined as a matrix. So R will understand t(t) as a transpose of
+a matrix.
+
+\emph{Dynamic lookup:} Explain the results of the five function calls
+and why the rm function in line 1 is important.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list =} \KeywordTok{ls}\NormalTok{(}\DataTypeTok{all.names =} \OtherTok{TRUE}\NormalTok{))}
+\NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, }\DataTypeTok{y =}\NormalTok{ x }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{) x }\OperatorTok{+}\StringTok{ }\NormalTok{y }
+\NormalTok{x <-}\StringTok{ }\DecValTok{3}
+\KeywordTok{f}\NormalTok{(}\DecValTok{2}\NormalTok{) }\CommentTok{# call 1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{5}
+\KeywordTok{f}\NormalTok{(}\DecValTok{2}\NormalTok{) }\CommentTok{# call 2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ x }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{) x }\OperatorTok{+}\StringTok{ }\NormalTok{y }
+\NormalTok{x <-}\StringTok{ }\DecValTok{3}
+\KeywordTok{f}\NormalTok{(}\DecValTok{2}\NormalTok{) }\CommentTok{# call 3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{5}
+\KeywordTok{f}\NormalTok{(}\DecValTok{2}\NormalTok{) }\CommentTok{# call 4 }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{f}\NormalTok{() }\CommentTok{# call 5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 11
+\end{verbatim}
+
+No idea xD
+
+
+\end{document}
