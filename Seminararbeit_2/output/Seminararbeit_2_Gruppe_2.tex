@@ -199,7 +199,7 @@ mean, the variance, the standard deviation and the standard error of x.
 \end{Shaded}
 
 \begin{verbatim}
-##       mean        var         sd         se 
+##       mean        var         sd         se
 ##  50.500000 841.666667  29.011492   2.901149
 \end{verbatim}
 
@@ -242,7 +242,7 @@ removing NA's (\texttt{na.rm}.)
 \end{Shaded}
 
 \begin{verbatim}
-##       mean        var         sd         se 
+##       mean        var         sd         se
 ##  50.500000 841.666667  29.011492   2.901149
 \end{verbatim}
 
@@ -279,7 +279,7 @@ function definition \textbf{dropNa} from the above exercise.
 \end{Shaded}
 
 \begin{verbatim}
-##       mean        var         sd         se 
+##       mean        var         sd         se
 ##  50.500000 841.666667  29.011492   2.901149
 \end{verbatim}
 
@@ -296,7 +296,7 @@ Write an infix function \%or\% that behaves like the logical operator
   \CommentTok{# TRUE OR FALSE = TRUE}
   \CommentTok{# FALSE OR TRUE = TRUE}
   \CommentTok{# FALSE OR FALSE = FALSE}
-  
+
   \KeywordTok{ifelse}\NormalTok{(x }\OperatorTok{==}\StringTok{ }\OtherTok{TRUE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{,}
          \KeywordTok{ifelse}\NormalTok{(y }\OperatorTok{==}\StringTok{ }\OtherTok{TRUE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{))}
 \NormalTok{\}}
@@ -549,9 +549,9 @@ argument is passed in the last call, the function returns the value for
 environment.
 \item[rm function]
 The rm function is useful to make sure that previously assigned values
-do not generate unexpected results. Nevertheless, it is bad practice to
-write code that this line is necessary, with high risks of getting one's
-computer burned\footnote{see
+do not generate unexpected results. Nevertheless, it is probably better
+to make sure this line is not necessary, reducing the risks of getting
+one's computer burned\footnote{see discussion on
   \url{https://twitter.com/hadleywickham/status/940021008764846080}}.
 \end{description}
 

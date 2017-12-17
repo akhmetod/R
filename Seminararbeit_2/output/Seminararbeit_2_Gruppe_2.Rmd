@@ -289,7 +289,7 @@ Call 5
 
 rm function
  ~ The rm function is useful to make sure that previously assigned values do not 
- generate unexpected results. Nevertheless, it is bad practice to write code that 
- this line is necessary, with high risks of getting one's computer burned[^1]. 
+ generate unexpected results. Nevertheless, it is probably better to make sure
+ this line is not necessary, reducing the risks of getting one's computer burned[^1]. 
  
- [^1]: see  https://twitter.com/hadleywickham/status/940021008764846080
+ [^1]: see discussion on https://twitter.com/hadleywickham/status/940021008764846080
