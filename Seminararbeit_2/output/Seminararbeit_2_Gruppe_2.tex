@@ -162,10 +162,12 @@ after removing missing values
 
 \subsection{Functions II:}\label{functions-ii}
 
-\emph{Part I:} Write a function meanVarSdSe that takes a numeric vector
-x as argument. The function should return a named numeric vector that
-contains the mean, the variance, the standard deviation and the standard
-error of x.
+\subsubsection*{Part I}\label{part-i}
+\addcontentsline{toc}{subsubsection}{Part I}
+
+Write a function meanVarSdSe that takes a numeric vector x as argument.
+The function should return a named numeric vector that contains the
+mean, the variance, the standard deviation and the standard error of x.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -190,10 +192,10 @@ error of x.
 ##  50.500000 841.666667  29.011492   2.901149
 \end{verbatim}
 
-\vspace{1cm}
+\subsubsection*{Part II}\label{part-ii}
+\addcontentsline{toc}{subsubsection}{Part II}
 
-\emph{Part II:} Look at the following code sequence. What result do you
-expect?
+Look at the following code sequence. What result do you expect?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -233,28 +235,30 @@ output of each function when using the default (FALSE) argument for
 ##  50.500000 841.666667  29.011492   2.901149
 \end{verbatim}
 
-\vspace{1cm}
+\subsubsection*{Part III}\label{part-iii}
+\addcontentsline{toc}{subsubsection}{Part III}
 
-\emph{Part III:} Write an alternative version of meanVarSdSe in which
-you make use of the function definition \textbf{dropNa} from the above
-exercise.
+Write an alternative version of meanVarSdSe in which you make use of the
+function definition \textbf{dropNa} from the above exercise.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{meanVarSdSe <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{}
+\NormalTok{meanVarSdSe <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, }\DataTypeTok{dropMissing =} \OtherTok{TRUE}\NormalTok{)\{}
   \CommentTok{# computs mean, variance, standard deviation and standard error while using }
-  \CommentTok{# dropNa function}
+  \CommentTok{# dropNa function per default}
   \CommentTok{#}
   \CommentTok{# Args:}
   \CommentTok{#   x: a numeric vector}
   \CommentTok{#}
   \CommentTok{# Returns:}
   \CommentTok{#   mean, variance, standard deviation and standard error of input vector}
-\NormalTok{  dropedNa <-}\StringTok{ }\KeywordTok{dropNa}\NormalTok{(x)}
-  \KeywordTok{c}\NormalTok{(}\DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(dropedNa),}
-    \DataTypeTok{var =} \KeywordTok{var}\NormalTok{(dropedNa),}
-    \DataTypeTok{sd =} \KeywordTok{sd}\NormalTok{(dropedNa),}
-    \DataTypeTok{se =} \KeywordTok{sd}\NormalTok{(dropedNa) }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{length}\NormalTok{(dropedNa))}
+  \ControlFlowTok{if}\NormalTok{ (dropMissing) \{}
+\NormalTok{    x <-}\StringTok{ }\KeywordTok{dropNa}\NormalTok{(x)}
+\NormalTok{  \}}
+  \KeywordTok{c}\NormalTok{(}\DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(x),}
+    \DataTypeTok{var =} \KeywordTok{var}\NormalTok{(x),}
+    \DataTypeTok{sd =} \KeywordTok{sd}\NormalTok{(x),}
+    \DataTypeTok{se =} \KeywordTok{sd}\NormalTok{(x) }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{length}\NormalTok{(x))}
 \NormalTok{  )}
 \NormalTok{\}}
 
@@ -286,6 +290,7 @@ Write an infix function \%or\% that behaves like the logical operator
          \KeywordTok{ifelse}\NormalTok{(y }\OperatorTok{==}\StringTok{ }\OtherTok{TRUE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{))}
 \NormalTok{\}}
 
+\CommentTok{# test}
 \KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{) }\OperatorTok{%or%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -297,7 +302,10 @@ Write an infix function \%or\% that behaves like the logical operator
 \section{\texorpdfstring{Part II: \emph{Scoping and related topics } (15
 points)}{Part II: Scoping and related topics  (15 points)}}\label{part-ii-scoping-and-related-topics-15-points}
 
-\emph{Scoping I:} Explain the results of the three function calls
+\subsection*{Scoping I}\label{scoping-i}
+\addcontentsline{toc}{subsection}{Scoping I}
+
+Explain the results of the three function calls
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -305,7 +313,12 @@ points)}{Part II: Scoping and related topics  (15 points)}}\label{part-ii-scopin
 \NormalTok{y <-}\StringTok{ }\DecValTok{7}
 \NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() x }\OperatorTok{*}\StringTok{ }\NormalTok{y}
 \NormalTok{g <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =} \DecValTok{2}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ x) x }\OperatorTok{*}\StringTok{ }\NormalTok{y}
-\KeywordTok{f}\NormalTok{() }\CommentTok{# call 1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{f}\NormalTok{()     }\CommentTok{# call 1}
 \end{Highlighting}
 \end{Shaded}
 
@@ -313,9 +326,14 @@ points)}{Part II: Scoping and related topics  (15 points)}}\label{part-ii-scopin
 ## [1] 35
 \end{verbatim}
 
+Function \texttt{f()} does not require any arguments and is defined as
+the product of \texttt{x} and \texttt{y}. It raises an error if
+\texttt{x} or \texttt{y} are not are not defined in the global (or any
+other parent) environment.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{g}\NormalTok{() }\CommentTok{# call 2}
+\KeywordTok{g}\NormalTok{()     }\CommentTok{# call 2}
 \end{Highlighting}
 \end{Shaded}
 
@@ -323,9 +341,22 @@ points)}{Part II: Scoping and related topics  (15 points)}}\label{part-ii-scopin
 ## [1] 4
 \end{verbatim}
 
+Function \texttt{g()} takes two arguments, which are \texttt{x} with a
+default value of 2 and \texttt{y}, which per default is assigned to the
+value of \texttt{x}. The function returns the product of \texttt{x} and
+\texttt{y}. In call 2, function \texttt{g()} is called without any
+arguments. In this case, x is set to 2 and y is equal to \texttt{x}. At
+first glance, it is unclear if R's interpreter will take the globally
+assigned value for x (here: 5) or if should take the local variable
+\texttt{x}, which is 2 per default. It turns out that the default
+arguments are evaluated in the local environment (that is, \emph{inside}
+the actual function). Therefore, when calling \texttt{g()} with default
+arguments, y is set to equal the \emph{local x} value, which is set to
+the default value of 2.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{g}\NormalTok{(}\DataTypeTok{y=}\NormalTok{x) }\CommentTok{#call3}
+\KeywordTok{g}\NormalTok{(}\DataTypeTok{y=}\NormalTok{x)  }\CommentTok{# call 3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -333,34 +364,22 @@ points)}{Part II: Scoping and related topics  (15 points)}}\label{part-ii-scopin
 ## [1] 10
 \end{verbatim}
 
-x and y are originally assigned to the value 5 and 7 respectively.\\
-Function f does not require any arguments and is defined as the product
-of x and y, which is 5*7 = 35 (see call 1).\\
-Function g has two arguments, which are x with the new value of 2 and y
-is assigned equally to x. Function g is also defined as the product of x
-and y. In call 2, function g is calles without any arguments. In this
-function, x is equal to 2 and y is equal to x. The nearest x to y has
-the value of 2. So the product is 4. In call 3, x is not called, so x
-will get the original value, which is 5. y is assigned equally to x. The
-nearest x to y has the value of 2. So the product is 10 in this case.
+In \emph{call 3}, the argument for \texttt{x} is not passed, so
+\texttt{x} will get the default value 2. Further, \texttt{y} is assigned
+to \texttt{x}. Differently to \emph{call 2}, the value of \texttt{y} is
+evaluated when calling the function. Thus \texttt{y} is explicitly
+assigned to the \emph{global x} (in this case 5).
 
-\emph{Scoping II:} Why and how does the following code work?
+\pagebreak
+
+\subsection*{Scoping II}\label{scoping-ii}
+\addcontentsline{toc}{subsection}{Scoping II}
+
+Why and how does the following code work?
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{t <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{, }\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{) }
-\NormalTok{t}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##      [,1] [,2] [,3]
-## [1,]    1    2    3
-## [2,]    4    5    6
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \KeywordTok{t}\NormalTok{(t)}
 \end{Highlighting}
 \end{Shaded}
@@ -372,12 +391,22 @@ nearest x to y has the value of 2. So the product is 10 in this case.
 ## [3,]    3    6
 \end{verbatim}
 
-t is a matrix with 3 columns and 2 rows. The values from 1 to 6 are
-filled by rows. t is also a default function in R, which returns the
-transpose of a matrix or data frame. So calling t(t) is actually
-transposing the defined matrix t.
+Here the variable \texttt{t} is defined to be a 2 by 3 matrix in the
+\emph{Global Environment}. However, \texttt{t()} is also a function from
+base R for computing the transpose of a matrix or data.frame. When
+calling \texttt{t(t)}, the parentheses indicate that R should first look
+for a function\texttt{t()} and skip non-function objects, and then apply
+this function to a object called \texttt{t}. R searches for a function
+\texttt{t()} and finds it in the \texttt{package:base} environment and
+calculates the transpose of the previously defined matrix \texttt{t}.
+The call \texttt{t(t)} only works because these objects with the same
+name are not created within the same environment, even when taking into
+consideration that one is a function and the other is a matrix object.
 
-\emph{Scoping III:} Why do the results of t(T) and t(t) differ?
+\subsection*{Scoping III}\label{scoping-iii}
+\addcontentsline{toc}{subsection}{Scoping III}
+
+Why do the results of t(T) and t(t) differ?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -397,10 +426,36 @@ transposing the defined matrix t.
 ## [6,]    6
 \end{verbatim}
 
-In the first case, t is defined as a specific function, which has the
-same function as a matrix(..) function. T is a matrix with 3 columns and
-2 rows. The values from 1 to 6 are also filled by rows. So calling t(T)
-is the same as calling matrix(T).
+In this scenarion, \texttt{t()} is a function defined in the global
+environment that takes \emph{any} arguments and passes them onto the
+base R \texttt{matrix()} function, which creates a matrix from a given
+set of values. Further, \texttt{T} is a 2 by 3 matrix. However, applying
+\texttt{t()} to \texttt{T} is the same as calling \texttt{matrix(T)}.
+This returns, somewhat surprisingly, a 6 by 1 matrix. This
+dimensionality distortion is due to the fact that a matrix object in R
+is, under the hood, a \emph{long} one-dimensional atomic vector with a
+\texttt{dim} attribute indicating the number of rows and columns. The
+default value for the number of rows and columns in \texttt{matrix()}
+function is 1. Therefore, when calling \texttt{matrix()} on a matrix
+object (and not defining a different number of rowns or columns), the
+matrix \texttt{T} gets ``unwrapped'' into the underlying one-dimensional
+row vector (or a six-dimensional column vector).
+
+The ordering {[}1,4,2,5,3,6{]} rather than {[}1,2,..,6{]} is due to
+\texttt{byrow\ =\ TRUE} argument when constructing the matrix. The same
+matrix could, for instance, be created by changing the dimensions of an
+atomic vector, as following,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aMatrix <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{6}\NormalTok{)}
+\KeywordTok{dim}\NormalTok{(aMatrix) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+which exemplifies the underlying nature of a matrix object in R.
+
+\pagebreak
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -417,12 +472,21 @@ is the same as calling matrix(T).
 ## [3,]    3    6
 \end{verbatim}
 
-In the second case, t is also defined as a matrix() function. But then
-being redefined as a matrix. So R will understand t(t) as a transpose of
-a matrix.
+In the above scenario, the first line basically maps the base function
+\texttt{matrix()} to \texttt{t()}. In the second line, \texttt{t()},
+while still mapped as a function, creates a 2 by 3 matrix, which is also
+mapped to \texttt{t}, overwriting the previous definition, since we
+cannot have multiple objects with the same name within the same
+environment. In the third line. When calling \texttt{t(t)}, R searches
+for the \textbf{function} \texttt{t()} and finds the transpose function
+from base R and not the already overwritten function in the Global
+Environment.
 
-\emph{Dynamic lookup:} Explain the results of the five function calls
-and why the rm function in line 1 is important.
+\subsection*{Dynamic Lookup}\label{dynamic-lookup}
+\addcontentsline{toc}{subsection}{Dynamic Lookup}
+
+Explain the results of the five function calls and why the rm function
+in line 1 is important.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -430,58 +494,53 @@ and why the rm function in line 1 is important.
 \NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, }\DataTypeTok{y =}\NormalTok{ x }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{) x }\OperatorTok{+}\StringTok{ }\NormalTok{y }
 \NormalTok{x <-}\StringTok{ }\DecValTok{3}
 \KeywordTok{f}\NormalTok{(}\DecValTok{2}\NormalTok{) }\CommentTok{# call 1}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 5
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\NormalTok{## [1] 5}
 \NormalTok{x <-}\StringTok{ }\DecValTok{5}
 \KeywordTok{f}\NormalTok{(}\DecValTok{2}\NormalTok{) }\CommentTok{# call 2}
-\end{Highlighting}
-\end{Shaded}
+\NormalTok{## [1] 5}
 
-\begin{verbatim}
-## [1] 5
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{f <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ x }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{) x }\OperatorTok{+}\StringTok{ }\NormalTok{y }
 \NormalTok{x <-}\StringTok{ }\DecValTok{3}
 \KeywordTok{f}\NormalTok{(}\DecValTok{2}\NormalTok{) }\CommentTok{# call 3}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 5
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\NormalTok{## [1] 5}
 \NormalTok{x <-}\StringTok{ }\DecValTok{5}
-\KeywordTok{f}\NormalTok{(}\DecValTok{2}\NormalTok{) }\CommentTok{# call 4 }
+\KeywordTok{f}\NormalTok{(}\DecValTok{2}\NormalTok{) }\CommentTok{# call 4}
+\NormalTok{## [1] 7}
+\KeywordTok{f}\NormalTok{()  }\CommentTok{# call 5}
+\NormalTok{## [1] 11}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## [1] 7
-\end{verbatim}
+\begin{description}
+\tightlist
+\item[Call 1 and 2]
+This function requires one argument, \texttt{x}, but also accepts a
+second argument, \texttt{y}. It returns the sum of \texttt{x} and
+\texttt{y}, with \texttt{y} equals \texttt{x\ +\ 1} per default.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{f}\NormalTok{() }\CommentTok{# call 5}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 11
-\end{verbatim}
-
-No idea xD
+This exemplifies the lazy evaluation property in R. By the time the
+function is created \texttt{x} doesn't exist and only when the function
+\texttt{f(2)} is called, 2 is passed as an argument for \texttt{x} and
+and \texttt{y} gets assigned to the expression \texttt{x\ +\ 1} from the
+newly created function environment.) The global value of \texttt{x} does
+not affect the function. Thus, call 1 and 2 returns the same result. One
+can affirm that \texttt{f()} is (weakly) self contained. That means, the
+values from global or parent environments don't affect the output of the
+function
+\item[Call 3 and 4]
+This function accepts only one argument, \texttt{y}, but a second
+variable, \texttt{x}, is required for it to work. Since this variable is
+not created within the function environment, R will \emph{go up} the
+search path looking for a variable called \texttt{x}. Even when passing
+the same argument for \texttt{y}, different values of \texttt{x} will
+yield different results, which can be seen on the results of call 3 and
+call 4. This function is, therefore, not self-contained.
+\item[Call 5]
+Since the default value for \texttt{y} is \texttt{x\ +\ 1} and no
+argument is passed in the last call, the function returns the value for
+\texttt{x\ +\ (x\ +\ 1)}, where \texttt{x} is the defined in the global
+environment.
+\end{description}
 
 
 \end{document}
