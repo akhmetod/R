@@ -205,9 +205,7 @@ t <- matrix(1:6, ncol = 3, byrow = TRUE)
 t(t)
 ```
 
-Here the variable `t` is defined to be a 2 by 3 matrix in the *Global Environment*. However, `t()` is also a function from base R for computing the transpose of a matrix or data.frame. When calling `t(t)`, the parentheses indicate that R should first look for a function`t()` and skip non-function objects, and then apply this function to a object called `t`. R searches for a function `t()` and finds it in the `package:base` environment and calculates the transpose of the previously defined matrix `t`.  The call `t(t)` only works because these objects with the
-same name are not created within the same environment, even when taking into consideration that one is a function
-and the other is a matrix object. 
+Here the variable `t` is defined to be a 2 by 3 matrix in the *Global Environment*. However, `t()` is also a function from base R for computing the transpose of a matrix or data.frame. When calling `t(t)`, the parentheses indicate that R should first look for a function`t()` and skip non-function objects, and then apply this function to a object called `t`. R searches for a function `t()` and finds it in the `package:base` environment and calculates the transpose of the previously defined matrix `t`.  The call `t(t)` only works because these objects with the same name are not created within the same environment, even when taking into consideration that one is a function and the other is a matrix object. 
 
 ## Scoping III {-}
 
