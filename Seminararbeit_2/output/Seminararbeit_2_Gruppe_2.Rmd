@@ -193,7 +193,7 @@ In call 2, function `g()` is called without any arguments. In this case, x is se
 g(y=x)  # call 3
 ```
 
-In *call 3*, the argument for `x` is not omitted, so `x` will get the default value 2. Further, `y` is assigned to `x`. Differently to *call 2*, the value of `y` is evaluated when calling the function. Thus `y` is explicitly assigned to the *global x* (in this case 5).
+In *call 3*, the argument for `x` is omitted, so `x` will get the default value 2. Further, `y` is assigned to `x`. Differently to *call 2*, the value of `y` is evaluated when calling the function. Thus `y` is explicitly assigned to the *global x* (in this case 5).
 
 
 ## Scoping II {-}
