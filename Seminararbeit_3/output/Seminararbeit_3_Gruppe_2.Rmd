@@ -22,9 +22,58 @@ fontsize: 12
 documentclass: article
 ---
 
-```{r}
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
+
+\newpage
+
+# Part I: *Linear regression* (15 points)
+
+```{r}
+A <- matrix(c(1, -1,
+            1, 1), nrow = 2, ncol = 2, byrow = TRUE)
+A
+b <- c(0,3)
+solve(A,b)
+```
+
+*Raw implementation*
+1. Read the help (solve - solve functions, t - transpose matrix, crossprod - crossproduct matrix)  
+2. Write function linModEst(x,y)
+
+```{r}
+linModEst <- function(x,y) {
+  ## compute temp=(x'x)^(-1) with x'=t(x)
+  temp <- crossprod(x,y = NULL) #compute (x'x)
+  temp <- solve(temp) #compute (x'x)^(-1)
+  
+  ## compute beta
+  temp1 <- crossprod(x,y) #compute(x'y)
+  beta <- crossprod(t(temp),temp1) #compute beta
+
+  
+}
+```
+
+`crossprod(x, y = NULL)` is equal to `t(x) %*% y`. Because `y = NULL` is taken to be the same matrix as `x`, the result will be `t(x) %*%`. To find the inverse matrix of `x'x` we used the function `solve()`.
+
+
+Testfunktionen
+```{r}
+x <- matrix(c(1,1,1,1,1,1,1,4,4.5,5,5.5,6,6.5,7),ncol = 2)
+y <- matrix(c(33,42,45,51,53,61,62))
+x
+temp <- crossprod(x) #x'x
+temp <- solve(temp) #(x'x)^(-1)
+
+temp1 <- crossprod(x,y) #x'y
+crossprod(t(temp),temp1)
+```
+
+
+
+
 
 
 
