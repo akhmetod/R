@@ -136,83 +136,142 @@
 \section{\texorpdfstring{Part I: \emph{Linear regression} (15
 points)}{Part I: Linear regression (15 points)}}\label{part-i-linear-regression-15-points}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{A <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\OperatorTok{-}\DecValTok{1}\NormalTok{,}
-            \DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{2}\NormalTok{, }\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{)}
-\NormalTok{A}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##      [,1] [,2]
-## [1,]    1   -1
-## [2,]    1    1
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{b <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{3}\NormalTok{)}
-\KeywordTok{solve}\NormalTok{(A,b)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 1.5 1.5
-\end{verbatim}
-
-\emph{Raw implementation} 1. Read the help (solve - solve functions, t -
-transpose matrix, crossprod - crossproduct matrix)\\
-2. Write function linModEst(x,y)
+\subsection{\texorpdfstring{\emph{Raw
+implementation}}{Raw implementation}}\label{raw-implementation}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{linModEst <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x,y) \{}
-\NormalTok{  ## compute (x'x)^(-1) with x'=t(x)}
-\NormalTok{  temp <-}\StringTok{ }\KeywordTok{crossprod}\NormalTok{(x,}\DataTypeTok{y =} \OtherTok{NULL}\NormalTok{)}
+\NormalTok{  ## compute temp=(x'x)^(-1) with x'=t(x)}
+\NormalTok{  temp <-}\StringTok{ }\KeywordTok{crossprod}\NormalTok{(x,}\DataTypeTok{y =} \OtherTok{NULL}\NormalTok{) }\CommentTok{#compute (x'x)}
+\NormalTok{  temp <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(temp) }\CommentTok{#compute (x'x)^(-1)}
   
+\NormalTok{  ## compute beta}
+\NormalTok{  temp1 <-}\StringTok{ }\KeywordTok{crossprod}\NormalTok{(x,y) }\CommentTok{#compute(x'y)}
+\NormalTok{  beta <-}\StringTok{ }\KeywordTok{crossprod}\NormalTok{(}\KeywordTok{t}\NormalTok{(temp),temp1) }\CommentTok{#compute beta}
+  
+\NormalTok{  ## calculate degree of freedom}
+\NormalTok{  df <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(x) }\OperatorTok{-}\StringTok{ }\KeywordTok{ncol}\NormalTok{(x)}
+  
+\NormalTok{  ## calculate sigma^2}
+\NormalTok{  SSR <-}\StringTok{ }\DecValTok{0}
+\NormalTok{  help <-}\StringTok{ }\DecValTok{0}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ (}\DecValTok{1}\OperatorTok{:}\KeywordTok{nrow}\NormalTok{(x))) \{}
+\NormalTok{    help <-}\StringTok{ }\NormalTok{(x[i,]) }\OperatorTok{%*%}\StringTok{ }\NormalTok{beta}
+\NormalTok{    SSR <-}\StringTok{ }\NormalTok{SSR }\OperatorTok{+}\StringTok{ }\NormalTok{(y[i] }\OperatorTok{-}\StringTok{ }\NormalTok{help)}\OperatorTok{^}\DecValTok{2}
+\NormalTok{  \}}
+\NormalTok{  sigma_power_}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\KeywordTok{as.double}\NormalTok{(SSR }\OperatorTok{/}\StringTok{ }\NormalTok{df)}
+\NormalTok{  sigma <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(sigma_power_}\DecValTok{2}\NormalTok{)}
+  
+  \CommentTok{# calculate covariance matrix}
+\NormalTok{  vcov <-}\StringTok{ }\NormalTok{sigma_power_}\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{temp}
+  
+  \CommentTok{# return results}
+  \KeywordTok{list}\NormalTok{(}\DataTypeTok{beta =}\NormalTok{ beta, }\DataTypeTok{vcov =}\NormalTok{ vcov, }\DataTypeTok{sigma =}\NormalTok{ sigma, }\DataTypeTok{df =}\NormalTok{ df)}
 \NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
 
-\texttt{crossprod(x,\ y\ =\ NULL)} is equal to \texttt{t(x)\ \%*\%\ y}.
-Because \texttt{y\ =\ NULL} is taken to be the same matrix as x, the
-result will be t(x) \%*\%
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{),}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{)}
-\NormalTok{x}
+\KeywordTok{data}\NormalTok{(cats, }\DataTypeTok{package =} \StringTok{"MASS"}\NormalTok{)}
+\KeywordTok{linModEst}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{, cats}\OperatorTok{$}\NormalTok{Bwt,}\KeywordTok{as.numeric}\NormalTok{(cats}\OperatorTok{$}\NormalTok{Sex) }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{), }
+          \DataTypeTok{y =}\NormalTok{ cats}\OperatorTok{$}\NormalTok{Hwt)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##      [,1] [,2]
-## [1,]    1    2
-## [2,]    3    4
+## $beta
+##             [,1]
+## [1,] -0.41495263
+## [2,]  4.07576892
+## [3,] -0.08209684
+## 
+## $vcov
+##             [,1]        [,2]        [,3]
+## [1,]  0.52900070 -0.20504763  0.06563743
+## [2,] -0.20504763  0.08690026 -0.04696312
+## [3,]  0.06563743 -0.04696312  0.09244480
+## 
+## $sigma
+## [1] 1.457138
+## 
+## $df
+## [1] 141
 \end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  By adding a new column with all values of 1, we transformed the given
+  matrix x into X.\\
+\item
+  \texttt{crossprod(x,\ y\ =\ NULL)} is equal to
+  \texttt{t(x)\ \%*\%\ y}. Because \texttt{y\ =\ NULL} is taken to be
+  the same matrix as \texttt{x}, the result will be
+  \texttt{t(x)\ \%*\%\ x}. To find the inverse matrix of
+  \texttt{x\textquotesingle{}x} we used the function \texttt{solve()}.\\
+\item
+  x is given as cbind bla, because the first column is used for
+  \texttt{ßo}
+\end{itemize}
+
+\subsection{\texorpdfstring{\emph{Check
+equivalent}}{Check equivalent}}\label{check-equivalent}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{t}\NormalTok{(x)}
+\NormalTok{Hwt <-}\StringTok{ }\NormalTok{cats}\OperatorTok{$}\NormalTok{Hwt}
+\NormalTok{Bwt <-}\StringTok{ }\NormalTok{cats}\OperatorTok{$}\NormalTok{Bwt}
+\NormalTok{Sex <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(cats}\OperatorTok{$}\NormalTok{Sex) }\OperatorTok{-}\StringTok{ }\DecValTok{1}
+
+\NormalTok{lm_cat <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Hwt }\OperatorTok{~}\StringTok{ }\NormalTok{Bwt }\OperatorTok{+}\StringTok{ }\NormalTok{Sex, }\DataTypeTok{data =}\NormalTok{ cats)}
+\KeywordTok{coef}\NormalTok{(lm_cat)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##      [,1] [,2]
-## [1,]    1    3
-## [2,]    2    4
+## (Intercept)         Bwt        SexM 
+## -0.41495263  4.07576892 -0.08209684
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{identical}\NormalTok{(}\KeywordTok{t}\NormalTok{(x) }\OperatorTok{%*%}\StringTok{ }\NormalTok{x,}\KeywordTok{crossprod}\NormalTok{(x))}
+\KeywordTok{vcov}\NormalTok{(lm_cat)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] TRUE
+##             (Intercept)         Bwt        SexM
+## (Intercept)  0.52900070 -0.20504763  0.06563743
+## Bwt         -0.20504763  0.08690026 -0.04696312
+## SexM         0.06563743 -0.04696312  0.09244480
 \end{verbatim}
+
+The same!!
+
+\subsection{\texorpdfstring{\emph{Extend
+implementation}}{Extend implementation}}\label{extend-implementation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{linMod <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(formula, data)\{}
+  \CommentTok{# still no idea :((}
+  \KeywordTok{lm}\NormalTok{(formula, data) }\CommentTok{# wäre schön ^^}
+\NormalTok{\}}
+
+\KeywordTok{linMod}\NormalTok{(Hwt }\OperatorTok{~}\StringTok{ }\NormalTok{Bwt }\OperatorTok{+}\StringTok{ }\NormalTok{Sex, }\DataTypeTok{data =}\NormalTok{ cats)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = formula, data = data)
+## 
+## Coefficients:
+## (Intercept)          Bwt         SexM  
+##     -0.4150       4.0758      -0.0821
+\end{verbatim}
+
+\section{PartII: S3 for linear
+models}\label{partii-s3-for-linear-models}
 
 
 \end{document}
