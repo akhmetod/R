@@ -1,0 +1,25 @@
+---
+title: 'Programmieren mit R: Seminararbeit 3'
+author:
+- Daniyar Akhmetov (5127348)
+- Marcelo Rainho Avila (4679876)
+- Xuan Son Le (4669361)
+date: 'Abgabedatum: 08.02.2018'
+output:
+  pdf_document:
+    keep_tex: yes
+    latex_engine: pdflatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '3'
+graphics: yes
+lof: no
+fontsize: 12
+documentclass: article
+---
+
+
