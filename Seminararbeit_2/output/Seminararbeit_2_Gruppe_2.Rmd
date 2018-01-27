@@ -84,13 +84,20 @@ meanVarSdSe(x)
 
 Look at the following code sequence. What result do you expect?
 
+One could expect that the functions would drop the missing values by default, 
+which is likely to be the more commonly expected scenario. Nonetheless, the 
+function returns NA values for each statistic computed, which is the output
+of each function when using the default (FALSE) argument for removing NA's (`na.rm`.). 
+This might be a safer choice in order to avoid silent bugs, that is, a code that 
+produces wrong results without raising an error. 
+
 ```{r expect, eval=FALSE}
 x <- c(NA, 1:100)
 meanVarSdSe(x)
 ```
 
-The code returns NA values for each statistic computed, which is the output
-of each function when using the default (FALSE) argument for removing NA's (`na.rm`.)
+
+Modify  the  function  definition  of meanVarSdSe with  the argument ...:
 
 
 ```{r meanVarSdSe with na.rm}
@@ -149,12 +156,7 @@ Write an infix function %or% that behaves like the logical operator |
 
 ```{r logical operator}
 "%or%" <- function(x,y) {
-  # logical operator OR:
-  # TRUE OR TRUE = TRUE
-  # TRUE OR FALSE = TRUE
-  # FALSE OR TRUE = TRUE
-  # FALSE OR FALSE = FALSE
-  
+  # infix function that behaves like logical operator OR
   ifelse(x == TRUE, TRUE,
          ifelse(y == TRUE, TRUE, FALSE))
 }
@@ -217,7 +219,7 @@ T <- t(1:6, ncol = 3, byrow = TRUE)
 t(T)
 ```
 
-In this scenarion, `t()` is a function defined in the global environment that takes *any* arguments and passes them onto the base R `matrix()` function, which creates a matrix from a given set of values. Further, `T` is a 2 by 3 matrix. However, applying `t()` to `T` is the same as calling `matrix(T)`. This returns, somewhat surprisingly, a 6 by 1 matrix.  This dimensionality distortion is due to the fact that a matrix object in R is, under the hood, a *long* one-dimensional atomic vector with a `dim` attribute indicating the number of rows and columns.  The default value for the number of rows and columns in `matrix()` function is 1. Therefore, when calling `matrix()` on a matrix object (and not defining a different number of rowns or columns), the matrix `T` gets "unwrapped" into the underlying one-dimensional row vector (or a six-dimensional column vector). 
+In this scenario, `t()` is a function defined in the global environment that takes *any* arguments and passes them onto the base R `matrix()` function, which creates a matrix from a given set of values. Further, `T` is a 2 by 3 matrix. However, applying `t()` to `T` is the same as calling `matrix(T)`. This returns, somewhat surprisingly, a 6 by 1 matrix.  This dimensionality distortion is due to the fact that a matrix object in R is, under the hood, a *long* one-dimensional atomic vector with a `dim` attribute indicating the number of rows and columns.  The default value for the number of rows and columns in `matrix()` function is 1. Therefore, when calling `matrix()` on a matrix object (and not defining a different number of rows or columns), the matrix `T` gets "unwrapped" into the underlying one-dimensional row vector (or a six-dimensional column vector). 
 
 The ordering [1,4,2,5,3,6] rather than [1,2,..,6] is due to `byrow = TRUE` argument when constructing the matrix. The same matrix could, for instance, be created by changing the dimensions of an atomic vector, as following,
     
@@ -270,9 +272,9 @@ Call 1 and 2
  ~ This exemplifies the lazy evaluation property in R. By the time the function is created
  `x` doesn't exist and only when the function `f(2)` is called, 2 is passed as an argument 
  for `x` and and `y` gets assigned to the expression `x + 1` from the newly created
- function environment.) The global value of `x` does not affect the function. Thus, 
+ function environment. The global value of `x` does not affect the function. Thus, 
  call 1 and 2 returns the same result. One can affirm  that `f()` is (weakly) self contained.
- That means, the values from global or parent environments don't affect the output of the function 
+ That means, the values from global or parent environments don't affect the output of the function.
  
 Call 3 and 4
  ~ This function accepts only one argument, `y`, but a second variable, `x`, is required for it 
@@ -283,11 +285,16 @@ Call 3 and 4
  
 Call 5
  ~ Since the default value for `y` is `x + 1` and no argument is passed in the last call, the function 
- returns the value for `x + (x + 1)`, where `x` is the defined in the global environment. 
+ returns the value for `x + (x + 1)`, where `x` is previously defined in the global environment. 
 
 rm function
  ~ The rm function is useful to make sure that previously assigned values do not 
- generate unexpected results. Nevertheless, it is probably better to make sure
- this line is not necessary, reducing the risks of getting one's computer burned[^1]. 
+ generate unexpected results. Nevertheless, it is probably better write such a function 
+ so that calling `rm()` is not strictly necessary, which reduces the risks of
+ getting one's computer burned[^1].  Now seriously, the `rm` function as called above
+ deletes all objects global environment environment, and thus, might delete other 
+ objects that are necessary for the analysis.  Calling `rm()` also does not restart
+ R into a clean state, since loaded packages remain attached. It is probabably a better practice
+ to start a new R session to make sure that the script runs properly from start to finish.
  
  [^1]: see discussion on https://twitter.com/hadleywickham/status/940021008764846080
